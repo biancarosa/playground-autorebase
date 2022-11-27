@@ -5,7 +5,7 @@ on:
 
 jobs:
   main:
-    name: Rebase
+    name: Check PR
     runs-on: ubuntu-latest
     steps:
       - name: git checkout
