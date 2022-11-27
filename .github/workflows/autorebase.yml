@@ -4,9 +4,13 @@ on:
   check_run:
     types: [completed]
 
+
+env:
+  workflow_name: "ci/circleci: Say Hello"
+
 jobs:
   main:
-    if: ${{ github.event.check_run.name == "ci/circleci: Say Hello" }}
+    if: ${{ github.event.check_run.name == $workflow_name }}
     name: Rebase
     runs-on: ubuntu-latest
     steps:
