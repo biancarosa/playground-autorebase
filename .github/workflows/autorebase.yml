@@ -5,7 +5,7 @@ on:
 
 
 env:
-  workflow_name: "ci/circleci: Say Hello"
+  workflow_name: "Say Hello Workflow"
 
 jobs:
   main:
