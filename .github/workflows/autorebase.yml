@@ -6,9 +6,6 @@ on:
   pull_request:
     types: [opened, reopened]
 
-env:
-  workflow_name: "Say Hello Workflow"
-
 jobs:
   main:
     name: Rebase
@@ -20,11 +17,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
-      - name: Echo
-        run: echo ${{github.event.check_run.name}}
-
       - name: automatic rebase
         uses: cirrus-actions/rebase@1.5
-        if: ${{ github.event.check_run.name == $workflow_name }}
+        if: ${{ github.event.check_run.name == 'Say Hello Workflow'}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
