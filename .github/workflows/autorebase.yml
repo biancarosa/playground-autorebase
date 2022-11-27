@@ -2,7 +2,9 @@ name: Rebase Pull Request
 
 on:
   check_run:
-
+    types: [completed]
+  pull_request:
+    types: [opened, reopened]
 
 env:
   workflow_name: "Say Hello Workflow"
