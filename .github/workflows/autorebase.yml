@@ -23,7 +23,9 @@ jobs:
           # Check if PR checks have passed
           - id: checks
             run: |
-                echo "gh pr checks --required=$?" >> $GITHUB_OUTPUT 
+                gh pr checks --required
+                echo "exit_code=$?" >> $GITHUB_OUTPUT
+                echo $GITHUB_OUTPUT 
             env:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
