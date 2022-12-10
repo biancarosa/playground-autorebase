@@ -1,24 +1,34 @@
-name: Rebase Pull Request
-
 on:
-  check_run:
-    types: [completed]
-  pull_request:
-    types: [opened, reopened]
+    # Run on every push on every branch
+    # Needed because they might already have the label
+    push:
+        branches-ignore:
+            # Ignore branches automatically created by github-rebase
+            - rebase-pull-request**
+            - cherry-pick-rebase-pull-request**
+            # Ignore branches for lumos release process
+            - release-candidate-**
+    # Run when pull requests get labeled
+    # Needed for when it gets labeled
+    pull_request:
+        types: [labeled]
 
 jobs:
-  main:
-    name: Rebase
-    runs-on: ubuntu-latest
-    steps:
-      - name: git checkout
-        uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0
+    auto-rebase:
+        name: AutoRebase
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v3
 
-      - name: automatic rebase
-        uses: cirrus-actions/rebase@1.5
-        if: ${{ github.event.check_run.name == "Say Hello Workflow" }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Check if PR checks have passed
+          - id: checks
+            run: |
+                echo "gh pr checks --required=$?" >> $GITHUB_OUTPUT 
+            env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          # Autorebase
+          - uses: Label305/AutoRebase@v0.1
+            if: steps.checks.outputs.exit_code == 0 
+            with: 
+                github_token: ${{ secrets.GITHUB_TOKEN   }}
