@@ -35,3 +35,4 @@ workflows:
   Say Hello Workflow:
     jobs:
       - Say Hello
+      - Say Hello Not Required
