@@ -14,7 +14,7 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
-      - run: sleep 100
+      - run: sleep 60
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
